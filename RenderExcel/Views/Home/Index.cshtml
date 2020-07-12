@@ -1,0 +1,40 @@
+﻿@using System.Data
+@model DataSet
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    table, html, td{
+        border:1px solid black;
+        background-color:lightgray;
+    }
+</style>
+
+@using(Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="postedFile"/>
+    <input type="submit" value="Import"/>
+}
+
+@if(Model != null)
+{
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            @foreach (System.Data.DataColumn column in Model.Tables[0].Columns)
+            {
+                <th align="center">@column.ColumnName</th>
+            }
+        </tr>
+        @foreach (System.Data.DataRow row in Model.Tables[0].Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Tables[0].Columns)
+                {
+                    <td align="center">@row[col.ColumnName]</td>
+                }
+            </tr>
+        }
+    </table>
+}
